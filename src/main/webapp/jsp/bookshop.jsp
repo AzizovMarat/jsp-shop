@@ -7,30 +7,6 @@
 <head>
     <% Product[] products = (Product[]) request.getAttribute("products"); %>
     <% String pageType = (String) request.getAttribute("page"); %>
-    <%--    <% for (Product p : products) {--%>
-
-    <%--    } %>--%>
-
-    <%--    <script>--%>
-    <%--        class Product {--%>
-    <%--            constructor(productType, productName, author, price, img, about) {--%>
-    <%--                this.productType = productType,--%>
-    <%--                    this.productName = productName,--%>
-    <%--                    this.author = author,--%>
-    <%--                    this.price = price,--%>
-    <%--                    this.img = img,--%>
-    <%--                    this.about = about--%>
-    <%--            }--%>
-    <%--        }--%>
-
-    <%--        let products = [];--%>
-    <%--        <% for (int i = 0; i < products.length; i++) { %>--%>
-    <%--            products[<%= i %>] = new Product(`<%= products[i].getProductType() %>`, `<%= products[i].getProductName() %>`,--%>
-    <%--                `<%= products[i].getAuthor() %>`, `<%= products[i].getPrice() %>`,--%>
-    <%--                `<%= products[i].getImg() %>`, `<%= products[i].getAbout() %>`);--%>
-    <%--        <% } %>--%>
-    <%--        module.exports = products;--%>
-    <%--    </script>--%>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
