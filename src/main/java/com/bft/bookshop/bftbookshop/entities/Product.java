@@ -1,6 +1,7 @@
 package com.bft.bookshop.bftbookshop.entities;
 
 public class Product {
+    private int product_id;
     private String productType;
     private String productName;
     private String author;
@@ -8,13 +9,22 @@ public class Product {
     private String img;
     private String about;
 
-    public Product(String productType, String productName, String author, int price, String img, String about) {
+    public Product(int product_id, String productType, String productName, String author, int price, String img, String about) {
+        this.product_id = product_id;
         this.productType = productType;
         this.productName = productName;
         this.author = author;
         this.price = price;
         this.img = img;
         this.about = about;
+    }
+
+    public int getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
     }
 
     public String getProductType() {
@@ -68,10 +78,11 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "productType='" + productType + '\'' +
+                "product_id=" + product_id +
+                ", productType='" + productType + '\'' +
                 ", productName='" + productName + '\'' +
                 ", author='" + author + '\'' +
-                ", price='" + price + '\'' +
+                ", price=" + price +
                 ", img='" + img + '\'' +
                 ", about='" + about + '\'' +
                 '}';
