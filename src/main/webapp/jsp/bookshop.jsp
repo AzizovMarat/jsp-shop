@@ -235,7 +235,7 @@
                     <% Map<Integer, List<int[]>> orders = (Map<Integer, List<int[]>>) request.getAttribute("orders"); %>
                     <% if (orders != null && !orders.isEmpty()) { %>
                     <div class="row">
-                        <div class="col border rounded border-primary bg-primary text-truncate text-center">
+                        <div class="col border rounded border-primary bg-primary text-white text-truncate text-center">
                             ID
                         </div>
                         <div class="col-xxl-6 col-xl-4 col-4 border rounded border-primary bg-primary text-white text-center text-truncate">
