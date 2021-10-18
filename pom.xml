@@ -40,8 +40,11 @@
             <artifactId>h2</artifactId>
             <version>1.4.200</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.0.0.Final</version>
+        </dependency>
     </dependencies>
 
     <build>

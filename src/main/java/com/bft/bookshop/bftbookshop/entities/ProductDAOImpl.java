@@ -1,5 +1,8 @@
 package com.bft.bookshop.bftbookshop.entities;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,15 +13,33 @@ import static sun.swing.MenuItemLayoutHelper.max;
 
 public class ProductDAOImpl implements ProductDAO {
 
+//    SessionFactory sessionFactory = new Configuration().buildSessionFactory();
     private final String JDBC_DRIVER = "org.h2.Driver";
-    private final String DATABASE_URL = "jdbc:h2:file:c:/Users/m.azizov/IdeaProjects/jsp-shop/db/dbBooks";
+    private final String DATABASE_URL = "jdbc:h2:mem:dbBooks";//;DB_CLOSE_DELAY=-1
+//    private final String DATABASE_URL = "jdbc:h2:file:c:/Users/m.azizov/IdeaProjects/jsp-shop/db/dbBooks";
     private final String USER = "root";
     private final String PASSWORD = "";
 
     private final Product[] products;
 
     public ProductDAOImpl() {
+        init();
         products = getProducts();
+    }
+
+    private void init() {
+        try {
+            Class.forName(JDBC_DRIVER);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        final String initDB = "jdbc:h2:mem:dbBooks;DB_CLOSE_DELAY=-1;INIT=runscript from '~/IdeaProjects/jsp-shop/src/main/resources/schema.sql'\\;runscript from '~/IdeaProjects/jsp-shop/src/main/resources/data.sql'";
+
+        try (Connection conn = DriverManager.getConnection(initDB, USER, PASSWORD)) {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
