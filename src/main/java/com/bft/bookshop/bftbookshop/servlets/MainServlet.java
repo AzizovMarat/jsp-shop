@@ -1,6 +1,7 @@
 package com.bft.bookshop.bftbookshop.servlets;
 
-import com.bft.bookshop.bftbookshop.entities.ProductDAOImpl;
+import com.bft.bookshop.bftbookshop.HibernateUtil;
+import com.bft.bookshop.bftbookshop.dao.ProductDAOImpl;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -100,5 +101,11 @@ public class MainServlet extends HttpServlet {
     public void deleteOrders(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         productDAOImpl.deleteOrders();
         showMainContent(req, resp);
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        HibernateUtil.destroy();
     }
 }

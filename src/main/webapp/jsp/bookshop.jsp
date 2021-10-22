@@ -1,6 +1,6 @@
-<%@ page import="com.bft.bookshop.bftbookshop.entities.Product" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="com.bft.bookshop.bftbookshop.entities.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!doctype html>
 <html lang="ru" prefix="og: http://ogp.me/ns#">
@@ -76,10 +76,10 @@
                     <label class="form-check-label" for="flexCheckDefault">Только в наличии</label>
                     <% } %>
                 </div>
-                <% List<int[]> warehouse = (List<int[]>) request.getAttribute("warehouse"); %>
+                <% List<WarehouseItem> warehouse = (List<WarehouseItem>) request.getAttribute("warehouse"); %>
                 <% if (warehouse != null && !warehouse.isEmpty()) { %>
                 <% for (int i = 0; i < products.length; i++) { %>
-                <% if (onlyInWarehouse && warehouse.get(i)[1] == 0) continue; %>
+                <% if (onlyInWarehouse && warehouse.get(i).getCount() == 0) continue; %>
                 <div class="col-xl-6">
                     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 product-card h-md-250 position-relative">
                         <div class="col p-4 d-flex flex-column">
@@ -101,7 +101,7 @@
                                     </a>
                                 </div>
                                 <div class="d-flex align-items-end"><%= products[i].getPrice() %> ₽</div>
-                                <div class="text-muted">На складе - <%= warehouse.get(i)[1] %> шт.</div>
+                                <div class="text-muted">На складе - <%= warehouse.get(i).getCount() %> шт.</div>
                             </div>
                         </div>
 
@@ -164,7 +164,7 @@
             <% if ("cart".equals(pageType)) { %>
             <div class="row mb-2" id="cartContent">
                 <div class="container" id="bodyCartContent">
-                    <% List<int[]> cart = (List<int[]>) request.getAttribute("cart"); %>
+                    <% List<CartItem> cart = (List<CartItem>) request.getAttribute("cart"); %>
                     <% if (cart != null && !cart.isEmpty()) { %>
                     <div class="row" id="notEmptyCartContent">
                         <div class="col border rounded border-primary bg-primary">
@@ -183,10 +183,10 @@
                         </div>
                     </div>
                     <% for (int i = 0; i < cart.size(); i++) { %>
-                    <% int id = cart.get(i)[0] - 1; %>
+                    <% int id = cart.get(i).getIdProducts() - 1; %>
                     <div class="row" id="<%= i %>">
                         <div class="col border rounded border-light-dark bg-light-dark text-truncate text-center">
-                            <a href="#" onclick=removeFromCart(<%= cart.get(i)[0] %>)>Удалить</a>
+                            <a href="#" onclick=removeFromCart(<%= cart.get(i).getId() %>)>Удалить</a>
                         </div>
                         <div class="col-xxl-6 col-xl-4 col-4 border rounded border-light-dark bg-light-dark text-truncate">
                             <%= products[id].getProductName() %>
@@ -196,10 +196,10 @@
                         </div>
                         <div class="col border rounded border-light-dark bg-light-dark text-truncate text-center"
                              id="count">
-                            <%= cart.get(i)[1] %>
+                            <%= cart.get(i).getCount() %>
                         </div>
                         <div class="col border rounded border-light-dark bg-light-dark text-truncate text-center">
-                            <%= products[id].getPrice() * cart.get(i)[1] %>
+                            <%= products[id].getPrice() * cart.get(i).getCount() %>
                         </div>
                     </div>
                     <% } %>
@@ -232,7 +232,7 @@
             <% if ("orders".equals(pageType)) { %>
             <div class="row mb-2">
                 <div class="container">
-                    <% Map<Integer, List<int[]>> orders = (Map<Integer, List<int[]>>) request.getAttribute("orders"); %>
+                    <% List<Order> orders = (List<Order>) request.getAttribute("orders"); %>
                     <% if (orders != null && !orders.isEmpty()) { %>
                     <div class="row">
                         <div class="col border rounded border-primary bg-primary text-white text-truncate text-center">
@@ -251,13 +251,14 @@
                             Цена
                         </div>
                     </div>
-                    <% for (Map.Entry<Integer, List<int[]>> entry : orders.entrySet()) { %>
-                    <% for (int[] ints : entry.getValue()) { %>
-                    <% int id_products = ints[0] - 1; %>
-                    <% int count = ints[1]; %>
+                    <% for (int i = 0; i < orders.size(); i++) { %>
+                    <% for (int j = 0; j < orders.get(i).getProductsAndCount().size(); j++) { %>
+                    <% OrderItem oi = orders.get(i).getProductsAndCount().get(j); %>
+                    <% int id_products = oi.getIdProducts() - 1; %>
+                    <% int count = oi.getCount(); %>
                     <div class="row">
                         <div class="col border rounded border-light-dark bg-light-dark text-truncate text-center">
-                            <%= entry.getKey() %>
+                            <%= orders.get(i).getId() %>
                         </div>
                         <div class="col-xxl-6 col-xl-4 col-4 border rounded border-light-dark bg-light-dark text-truncate">
                             <%= products[id_products].getProductName() %>

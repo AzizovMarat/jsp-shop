@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="dbBooks" uuid="2b6d48fe-e767-4af3-b4f9-391e3e1919bc">
+    <data-source source="LOCAL" name="dbBooks" uuid="56fb5221-6613-4062-9b67-9535c1e4f5fc">
       <driver-ref>h2.unified</driver-ref>
       <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate
+
+C:/Users/m.azizov/IdeaProjects/jsp-shop/src/main/resources/hibernate.cfg.xml</remarks>
       <jdbc-driver>org.h2.Driver</jdbc-driver>
-      <jdbc-url>jdbc:h2:mem:dbBooks;DB_CLOSE_DELAY=-1</jdbc-url>
+      <jdbc-url>jdbc:h2:mem:dbBooks</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
