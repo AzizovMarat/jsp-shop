@@ -21,10 +21,10 @@
 
     <property name="hbm2ddl.auto">create-drop</property>
 
-    <mapping class="com.bft.bookshop.bftbookshop.entities.CartItem"/>
-    <mapping class="com.bft.bookshop.bftbookshop.entities.Order"/>
-    <mapping class="com.bft.bookshop.bftbookshop.entities.WarehouseItem"/>
-    <mapping class="com.bft.bookshop.bftbookshop.entities.Product"/>
-    <mapping class="com.bft.bookshop.bftbookshop.entities.OrderItem"/>
+    <mapping class="com.bft.bookshop.entities.CartItem"/>
+    <mapping class="com.bft.bookshop.entities.Order"/>
+    <mapping class="com.bft.bookshop.entities.WarehouseItem"/>
+    <mapping class="com.bft.bookshop.entities.Product"/>
+    <mapping class="com.bft.bookshop.entities.OrderItem"/>
   </session-factory>
 </hibernate-configuration>

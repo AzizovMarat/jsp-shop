@@ -1,6 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="com.bft.bookshop.bftbookshop.entities.*" %>
+<%@ page import="com.bft.bookshop.entities.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!doctype html>
 <html lang="ru" prefix="og: http://ogp.me/ns#">
@@ -27,6 +27,7 @@
         БФТ - Заказы
         <% } %>
     </title>
+    <link rel="shortcut icon" href="#">
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
           integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
@@ -142,7 +143,7 @@
                                 <div class="text-muted">На складе - <%= request.getAttribute("warehouseCount") %>шт.
                                 </div>
                                 <button type="button" class="btn btn-primary"
-                                        onclick="addInCart(<%= product.getProduct_id() %>)"
+                                        onclick="addToCart(<%= product.getProduct_id() %>)"
                                         <% if((int) request.getAttribute("warehouseCount") == 0) { %>disabled<% } %>>
                                     Добавить в корзину
                                 </button>

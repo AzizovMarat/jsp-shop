@@ -1,34 +1,36 @@
-package com.bft.bookshop.bftbookshop.servlets;
+package com.bft.bookshop.controllers;
 
-import com.bft.bookshop.bftbookshop.HibernateUtil;
-import com.bft.bookshop.bftbookshop.dao.ProductDAOImpl;
-import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import com.bft.bookshop.dao.ProductDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
-@WebServlet("/main")
-public class MainServlet extends HttpServlet {
-    private ProductDAOImpl productDAOImpl;
+@Controller
+@RequestMapping("/main")
+public class MainController {
 
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        productDAOImpl = new ProductDAOImpl();
+    private final ProductDAO productDAO;
+
+    @Autowired
+    public MainController(ProductDAO productDAO) {
+        this.productDAO = productDAO;
     }
 
-    @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @GetMapping
+    public String doGet(HttpServletRequest req, HttpServletResponse resp, Model model) throws ServletException, IOException {
         this.doPost(req, resp);
+        return "bookshop";
     }
 
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         String methodName = req.getParameter("method");
@@ -43,8 +45,8 @@ public class MainServlet extends HttpServlet {
     }
 
     public void showMainContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("products", productDAOImpl.getAllProducts());
-        req.setAttribute("warehouse", productDAOImpl.getWarehouse());
+        req.setAttribute("products", productDAO.getAllProducts());
+        req.setAttribute("warehouse", productDAO.getWarehouse());
 
         HttpSession session = req.getSession();
         String strOnlyInWarehouse = req.getParameter("onlyInWarehouse");
@@ -65,47 +67,41 @@ public class MainServlet extends HttpServlet {
 
     public void removeFromCart(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
-        productDAOImpl.removeFromCart(id);
+        productDAO.removeFromCart(id);
         showCart(req, resp);
     }
 
-    public void addInCart(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void addToCart(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
-        productDAOImpl.addInCart(id);
+        productDAO.addToCart(id);
         showProduct(req, resp);
     }
 
     public void showCart(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("products", productDAOImpl.getAllProducts());
-        req.setAttribute("cart", productDAOImpl.getCart());
+        req.setAttribute("products", productDAO.getAllProducts());
+        req.setAttribute("cart", productDAO.getCart());
         req.setAttribute("page", "cart");
         req.getRequestDispatcher("/jsp/bookshop.jsp").forward(req, resp);
     }
 
     public void showProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("product", productDAOImpl.getProductById(Integer.parseInt(req.getParameter("id"))));
-        req.setAttribute("warehouseCount", productDAOImpl.getCountFromWarehouse(Integer.parseInt(req.getParameter("id"))));
+        req.setAttribute("product", productDAO.getProductById(Integer.parseInt(req.getParameter("id"))));
+        req.setAttribute("warehouseCount", productDAO.getCountFromWarehouse(Integer.parseInt(req.getParameter("id"))));
         req.setAttribute("id", req.getParameter("id"));
         req.setAttribute("page", "product");
         req.getRequestDispatcher("/jsp/bookshop.jsp").forward(req, resp);
     }
 
     public void addOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        productDAOImpl.addOrder();
-        req.setAttribute("products", productDAOImpl.getAllProducts());
-        req.setAttribute("orders", productDAOImpl.getOrders());
+        productDAO.addOrder();
+        req.setAttribute("products", productDAO.getAllProducts());
+        req.setAttribute("orders", productDAO.getOrders());
         req.setAttribute("page", "orders");
         req.getRequestDispatcher("/jsp/bookshop.jsp").forward(req, resp);
     }
 
     public void deleteOrders(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        productDAOImpl.deleteOrders();
+        productDAO.deleteOrders();
         showMainContent(req, resp);
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
-        HibernateUtil.destroy();
     }
 }

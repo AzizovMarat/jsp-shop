@@ -1,4 +1,4 @@
-package com.bft.bookshop.bftbookshop.entities;
+package com.bft.bookshop.entities;
 
 import javax.persistence.*;
 import java.util.List;

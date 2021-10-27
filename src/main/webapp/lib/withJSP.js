@@ -29,8 +29,8 @@ function showMainContent(showOnlyInWarehouse) {
     }
 }
 
-function addInCart(index) {
-    location.href = "/main?method=addInCart&id=" + index;
+function addToCart(index) {
+    location.href = "/main?method=addToCart&id=" + index;
 }
 
 function showCartContent() {

@@ -1,10 +1,14 @@
-package com.bft.bookshop.bftbookshop;
+package com.bft.bookshop;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PreDestroy;
+
+@Component
 public class HibernateUtil {
 
     private static SessionFactory sessionFactory;
@@ -18,10 +22,14 @@ public class HibernateUtil {
         }
     }
 
+    private HibernateUtil() {
+    }
+
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 
+    @PreDestroy
     public static void destroy() {
         if ( sessionFactory != null ) sessionFactory.close();
     }

@@ -1,17 +1,16 @@
-package com.bft.bookshop.bftbookshop.dao;
+package com.bft.bookshop.dao;
 
-import com.bft.bookshop.bftbookshop.entities.CartItem;
-import com.bft.bookshop.bftbookshop.entities.Order;
-import com.bft.bookshop.bftbookshop.entities.Product;
-import com.bft.bookshop.bftbookshop.entities.WarehouseItem;
+import com.bft.bookshop.entities.CartItem;
+import com.bft.bookshop.entities.Order;
+import com.bft.bookshop.entities.Product;
+import com.bft.bookshop.entities.WarehouseItem;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ProductDAO {
     Product[] getAllProducts();
     List<CartItem> getCart();
-    void addInCart(int index);
+    void addToCart(int index);
     void removeFromCart(int index);
     List<WarehouseItem> getWarehouse();
     int getCountFromWarehouse(int index);

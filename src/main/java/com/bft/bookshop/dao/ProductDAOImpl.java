@@ -1,14 +1,16 @@
-package com.bft.bookshop.bftbookshop.dao;
+package com.bft.bookshop.dao;
 
-import com.bft.bookshop.bftbookshop.HibernateUtil;
-import com.bft.bookshop.bftbookshop.entities.*;
+import com.bft.bookshop.HibernateUtil;
+import com.bft.bookshop.entities.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ProductDAOImpl implements ProductDAO {
 
     private final Product[] products;
@@ -95,7 +97,6 @@ public class ProductDAOImpl implements ProductDAO {
         session.beginTransaction();
 
         List<Order> orders = session.createQuery("from Order").list();
-        System.out.println("List orders: " + orders);
 
         session.getTransaction().commit();
         session.close();
@@ -135,7 +136,6 @@ public class ProductDAOImpl implements ProductDAO {
         session.beginTransaction();
 
         List<WarehouseItem> warehouse = session.createQuery("from WarehouseItem").list();
-        System.out.println("Warehouse: " + warehouse);
         session.getTransaction().commit();
         session.close();
 
@@ -156,7 +156,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void addInCart(int index) {
+    public void addToCart(int index) {
         Transaction tx = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
